@@ -23,7 +23,7 @@ export class SortedList extends Component {
             <div>
                 <GeneralList list={ this.getList() } theme="info" />
                 <div className="text-center m-2">
-                    <ActionButton theme="primary" text="Sort" callback={ this.toggleSort } />
+                    <ActionButton theme="primary" text="Sort" proMode={ this.props.proMode } callback={ this.toggleSort } />
                 </div>
             </div>
         )
