@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { GeneralList } from "./GeneralList";
 import { SortedList } from "./SortedList";
 import { ProModeContext } from "./ProModeContext";
 import { ProModeToggle } from "./ProModeToggle";
@@ -14,6 +13,10 @@ export default class App extends Component {
       proContextData: {
         proMode: false,
         toggleProMode: this.toggleProMode
+      },
+      superProContextData: {
+        proMode: false,
+        toggleProMode: this.toggleSuperMode
       }
     };
   }
@@ -26,23 +29,40 @@ export default class App extends Component {
     }
   }
 
+  toggleSuperMode = () => {
+    if (this.state.superProContextData.proMode) {
+      this.setState(state => state.superProContextData.proMode = false);
+    } else {
+      this.setState(state => state.superProContextData.proMode = true);
+    }
+  }
+
   render() {
     return <div className="container-fluid">
-      <ProModeContext.Provider value={ this.state.proContextData }>
         <div className="row">
-          <div className="col-12 text-center p-2">
-            <ProModeToggle label="Pro Mode" />
+          <div className="col-6 text-center p-2">
+            <ProModeContext.Provider value={ this.state.proContextData }>
+              <ProModeToggle label="Pro Mode" />
+            </ProModeContext.Provider>
+          </div>
+          <div className="col-6 text-center p-2">
+            <ProModeContext.Provider value={ this.state.superProContextData }>
+              <ProModeToggle label="Super Pro Mode" />
+            </ProModeContext.Provider>
           </div>
         </div>
         <div className="row">
           <div className="col-6">
-            <GeneralList list={ this.state.names } theme="primary" />
-          </div>
-          <div className="col-6">
+            <ProModeContext.Provider value={ this.state.proContextData }>
               <SortedList list={ this.state.names } />
+            </ProModeContext.Provider>
+          </div>
+          <div className="col-6">
+            <ProModeContext.Provider value={ this.state.superProContextData }>
+              <SortedList list={ this.state.names } />
+            </ProModeContext.Provider>
           </div>
         </div>
-      </ProModeContext.Provider>
     </div>
   }
 }
